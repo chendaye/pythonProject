@@ -15,19 +15,19 @@ def getNode():
     print(f'总节点数：{len(node)}')  # 总节点数：96,1309
 
 def spiltRelationByReadTable():
-    shared_members_path = "F:\\neo4jcsv\\shared_members.csv"
-    step = 5000000
+    shared_members_path = "/usr/local/neo4j-community-4.2.1/import/shared_members.csv"
+    step = 2000000
     num = math.ceil(34856900 / step)
     print(f'文件数：{num}')
     head, tail = os.path.splitext(shared_members_path)
     re = pd.read_table(shared_members_path, chunksize=step, sep=',', encoding='gbk')
     i = 0  # 定文件名
     for chunk in re:
-        chunk.to_csv((f'F:\\neo4jcsv\\shared_members_mini_{i}.csv').format(head, 0, tail), index=False)
+        chunk.to_csv((f'/usr/local/neo4j-community-4.2.1/import/shared_members_mini_{i}.csv').format(head, 0, tail), index=False)
         print(f'保存文件：{i}')
         i += 1
 
-    shared_members = pd.read_csv("F:\\neo4jcsv\\shared_members.csv")
+    # shared_members = pd.read_csv("F:\\neo4jcsv\\shared_members.csv")
 
 
 def spiltRelationByReadCsv():
