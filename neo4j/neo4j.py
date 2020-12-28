@@ -16,7 +16,7 @@ def getNode():
 
 def spiltRelationByReadTable():
     shared_members_path = "F:\\neo4jcsv\\shared_members.csv"
-    step = 5000000
+    step = 2000000
     num = math.ceil(34856900 / step)
     print(f'文件数：{num}')
     head, tail = os.path.splitext(shared_members_path)
