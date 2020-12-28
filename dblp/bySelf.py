@@ -75,6 +75,7 @@ class dblpArticleHandler(xml.sax.ContentHandler):
             self.saveAsCsv(articleCsvPath)
 
             # author-relationship
+            i = 0
             for p in self.author:
                 # 节点 author 信息 id name article_list
                 curArticle = (self.article_id, self.title, self.journal, self.year)
@@ -85,7 +86,17 @@ class dblpArticleHandler(xml.sax.ContentHandler):
                     self.author_dict.update({p: (self.author_id, p, [curArticle])})
                     self.author_id += 1
                 # relationship
-                relationshipKey = str(self.author[0])
+                firstAuthorId = self.author_dict.get(self.author[0])[0]
+                curAuthorId = self.author_dict.get(p)[0]
+                if i > 0:
+                    relationshipKey = str(firstAuthorId) +"-"+ str(curAuthorId) if firstAuthorId < curAuthorId else str(curAuthorId) +"-"+ str(firstAuthorId)
+                    print(str(firstAuthorId)+"<>"+str(curAuthorId)+"<>"+relationshipKey)
+                    if relationshipKey in self.relationship_dict:
+                        rls = self.relationship_dict.get(relationshipKey)
+                        rls[1] += 1 # 边的权重增加
+                    else:
+                        self.relationship_dict.update({relationshipKey: [firstAuthorId, 1, curAuthorId]}) # 新增一条边
+                i += 1
 
 
             # 重置xml数据
@@ -157,3 +168,4 @@ if (__name__ == "__main__"):
             csv_file.writerow((author_id, author))
             author_id += 1
     print(Handler.author_dict)
+    print(Handler.relationship_dict)
