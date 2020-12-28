@@ -1,11 +1,12 @@
 import xml.sax
 import csv
-import re
-import time
 import os
+from itertools import combinations
+
 
 articleCsvPath = "../data/dblp/article.csv"
 authorCsvPath = "../data/dblp/author.csv"
+relationshipCsvPath = "../data/dblp/relationship.csv"
 
 class dblpArticleHandler(xml.sax.ContentHandler):
     def __init__(self):
@@ -29,6 +30,8 @@ class dblpArticleHandler(xml.sax.ContentHandler):
         self.article_id = 0
         # author_id
         self.author_id = 0
+        # article_list
+        self.article_list = []
         # author => author_id
         self.author_dict = dict()
         # author => ((title_id, title), (...))
@@ -44,9 +47,9 @@ class dblpArticleHandler(xml.sax.ContentHandler):
         self.CurrentTag = tag
         if tag == "article":
             # 标签属性
-            self.mdate = attributes["mdate"]
-            self.key = attributes["key"]
-            self.publtype = attributes["publtype"]
+            self.mdate = attributes["mdate"] if "mdate" in attributes else ""
+            self.key = attributes["key"] if "key" in attributes else ""
+            self.publtype = attributes["publtype"] if "publtype" in attributes else ""
             self.reviewid = attributes["reviewid"] if "reviewid" in attributes else ""
             self.rating = attributes["rating"] if "rating" in attributes else ""
             self.rating = attributes["cdate"] if "cdate" in attributes else ""
@@ -72,47 +75,52 @@ class dblpArticleHandler(xml.sax.ContentHandler):
 
         if tag == "article":
             # 创建 article.csv 原始信息
-            self.saveAsCsv(articleCsvPath)
+            self.article_list.append((
+                        self.article_id,
+                        "|".join(self.author),
+                        self.title,
+                        self.journal,
+                        self.year,
+                        "|".join(self.ee),
+                        self.mdate,
+                        self.key,
+                        self.publtype,
+                        self.reviewid,
+                        self.rating))
+            # print(tag+"=="+str(self.article_id) +"===" +self.title)
 
-            # author-relationship
-            i = 0
+            # author
+            auId = []
             for p in self.author:
                 # 节点 author 信息 id name article_list
-                curArticle = (self.article_id, self.title, self.journal, self.year)
+                curArticle = (str(self.article_id), self.title, self.journal, self.year)
                 if p in self.author_dict:
                     curp = self.author_dict.get(p)
+                    auId.append(curp[0])
                     curp[2].append(curArticle) # 当前作者发表的文章 list
                 else:
                     self.author_dict.update({p: (self.author_id, p, [curArticle])})
+                    auId.append(self.author_id)
                     self.author_id += 1
-                # relationship
-                firstAuthorId = self.author_dict.get(self.author[0])[0]
-                curAuthorId = self.author_dict.get(p)[0]
-                if i > 0:
-                    relationshipKey = str(firstAuthorId) +"-"+ str(curAuthorId) if firstAuthorId < curAuthorId else str(curAuthorId) +"-"+ str(firstAuthorId)
-                    print(str(firstAuthorId)+"<>"+str(curAuthorId)+"<>"+relationshipKey)
-                    if relationshipKey in self.relationship_dict:
-                        rls = self.relationship_dict.get(relationshipKey)
-                        rls[1] += 1 # 边的权重增加
-                    else:
-                        self.relationship_dict.update({relationshipKey: [firstAuthorId, 1, curAuthorId]}) # 新增一条边
-                i += 1
-
+            # relationship 作者超过 100 就只取前面 100个
+            if len(auId) > 100:
+                print(str(self.article_id) + ":count=" + str(len(auId)))
+                print(auId)
+                auId = auId[0:99]
+            for p in list(combinations(auId, 2)):
+                relationshipKey = str(p[0]) + "-" + str(p[1])
+                if relationshipKey in self.relationship_dict:
+                    rls = self.relationship_dict.get(relationshipKey)
+                    rls[1] += 1  # 边的权重增加
+                else:
+                    self.relationship_dict.update({relationshipKey: [p[0], 1, p[1]]})  # 新增一条边
 
             # 重置xml数据
             self.resetArticle()
+            self.article_id += 1
         self.CurrentTag = ""
-        self.article_id += 1
 
 
-
-    def saveAsCsv(self, path):
-        data = (self.article_id, "|".join(self.author), self.title, self.journal, self.year, "|".join(self.ee), self.mdate,
-        self.key, self.publtype, self.reviewid, self.rating)
-
-        with open(path, "a+", newline='') as file:  # 处理csv读写时不同换行符  linux:\n    windows:\r\n    mac:\r
-            csv_file = csv.writer(file)
-            csv_file.writerow(data)
 
     # 创建csv文件
     def writeCsvScheme(self, scheme, path):
@@ -121,9 +129,6 @@ class dblpArticleHandler(xml.sax.ContentHandler):
                 csv_file = csv.writer(file)
                 csv_file.writerow(scheme)
 
-
-    def buildGraph(self):
-        print(self.article_id)
 
     def resetArticle(self):
         self.author = []
@@ -150,22 +155,35 @@ if (__name__ == "__main__"):
     # 重写 ContextHandler
     Handler = dblpArticleHandler()
     parser.setContentHandler(Handler)
-
-    # 创建csv
-    articleScheme = ("article_id", "author", "title", "journal", "year", "ee", "mdate", "key", "publtype", "reviewid", "rating")
-    Handler.writeCsvScheme(articleScheme, articleCsvPath)
-
     # 解析xml
-    parser.parse("../data/dblp/test.xml")
+    # parser.parse("../data/dblp/test.xml")
+    parser.parse("../data/dblp/temp/dblp.xml")
+
+    # 创建 article.csv
+    articleScheme = (
+    "article_id", "author", "title", "journal", "year", "ee", "mdate", "key", "publtype", "reviewid", "rating")
+    Handler.writeCsvScheme(articleScheme, articleCsvPath)
+    with open(articleCsvPath, "a+", newline='') as file:  # 处理csv读写时不同换行符  linux:\n    windows:\r\n    mac:\r
+        csv_file = csv.writer(file)
+        for atl in Handler.article_list:
+            csv_file.writerow(atl)
 
     # 创建author.csv
-    authorScheme = ("author_id", "name")
+    authorScheme = ("author_id", "name", "article_list")
     Handler.writeCsvScheme(authorScheme, authorCsvPath)
     author_id = 0
     with open(authorCsvPath, "a+", newline='') as file:
         csv_file = csv.writer(file)
-        for author in Handler.author_set:
-            csv_file.writerow((author_id, author))
-            author_id += 1
-    print(Handler.author_dict)
-    print(Handler.relationship_dict)
+        for au in Handler.author_dict.values():
+            strArticle = []
+            for ar in au[2]:
+                strArticle.append("#".join(ar))
+            csv_file.writerow((au[0], au[1], "@".join(strArticle)))
+
+    # 创建 relationship.csv
+    relationshipScheme = ("start", "weight", "end")
+    Handler.writeCsvScheme(relationshipScheme, relationshipCsvPath)
+    with open(relationshipCsvPath, "a+", newline='') as file2:
+        csv_file = csv.writer(file2)
+        for rd in Handler.relationship_dict.values():
+            csv_file.writerow((rd[0], rd[1], rd[2]))

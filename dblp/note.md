@@ -65,8 +65,19 @@ article_id author title journal year ee mdate key publtype reviewid rating
 
 ```bash
 # vim 替换
-:%s/&\w*;//g
 
 :%s/&.*;//g
+
+sed -i ""  's/&.*;//g'  dblp.xml
+sed -i ""  's/\<\/su[pb]\>//g'  dblp.xml
+sed -i ""  's/\<su[pb]\>//g'  dblp.xml
+
+
+
+sed -i ""  's/\<i\>//g'  dblp.xml
+sed -i ""  's/\<\/i\>//g'  dblp.xml
+
+
+sed -i -e '38367266d' ./temp/dblp.xml
 
 ```
