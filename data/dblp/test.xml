@@ -2,7 +2,8 @@
 <!DOCTYPE dblp SYSTEM "/Users/lengo/code/pythonProject/data/dblp/temp/dblp.dtd">
 <dblp>
 <article mdate="2020-06-25" key="tr/meltdown/s18" publtype="informal">
-<author>Paul Kocher</author>
+<author>lengo</author>
+<author>Paul amp Kocher</author>
 <author>Daniel Genkin</author>
 <author>Daniel Gruss</author>
 <author>Werner Haas 0004</author>
@@ -13,6 +14,43 @@
 <author>Michael Schwarz 0001</author>
 <author>Yuval Yarom</author>
 <title>Spectre Attacks: Exploiting Speculative Execution.</title>
+<journal>meltdownattack.com</journal>
+<year>2018</year>
+<ee type="oa">https://spectreattack.com/spectre.pdf</ee>
+</article>
+
+    <article mdate="2020-06-25" key="tr/meltdown/s18" publtype="informal">
+<author>Paul Kocher</author>
+        <author>lengo</author>
+<author>Daniel Genkin</author>
+<author>Daniel Gruss</author>
+<author>Werner Haas 0004</author>
+<author>Mike Hamburg</author>
+<author>Moritz Lipp</author>
+<author>Stefan Mangard</author>
+<author>Thomas Prescher 0002</author>
+<author>Michael Schwarz 0001</author>
+<author>Yuval Yarom</author>
+<title>lllllllllllllllllllllllllllllllll.</title>
+<journal>meltdownattack.com</journal>
+<year>2018</year>
+<ee type="oa">https://spectreattack.com/spectre.pdf</ee>
+</article>
+
+        <article mdate="2020-06-25" key="tr/meltdown/s18" publtype="informal">
+<author>Paul Kocher</author>
+            <author>lengo</author>
+<author>Daniel Genkin</author>
+<author>Daniel Gruss</author>
+<author>Werner Haas 0004</author>
+<author>Mike Hamburg</author>
+<author>Moritz Lipp</author>
+<author>Stefan Mangard</author>
+<author>Thomas Prescher 0002</author>
+<author>Michael Schwarz 0001</author>
+<author>Yuval Yarom</author>
+<author>uuuuuu</author>
+<title>8888888888888.</title>
 <journal>meltdownattack.com</journal>
 <year>2018</year>
 <ee type="oa">https://spectreattack.com/spectre.pdf</ee>
