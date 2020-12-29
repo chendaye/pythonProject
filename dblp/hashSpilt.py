@@ -4,6 +4,7 @@ import os
 from itertools import combinations
 import hashlib
 import math
+import datetime
 
 
 class dblpArticleHandler(xml.sax.ContentHandler):
@@ -126,8 +127,9 @@ class dblpArticleHandler(xml.sax.ContentHandler):
                 auId = auId[0:99]
             inx = 0
             for p in list(combinations(auId, 2)):
-                # relationshipHashCode = self.getHashCode(str(p[0]) + "-" + str(p[1]))
-                relationshipHashCode = p[0]+ p[1] - 1  # 让 p[0] p[1] 确定一条边
+                key = str(p[0]) + "-" + str(p[1]) if p[0] < p[1] else str(p[1]) + "-" + str(p[0])
+                relationshipHashCode = self.getHashCode(key) # 怎么搞一个唯一的 code
+                # relationshipHashCode = p[0]+ p[1] - 1  # 让 p[0] p[1] 确定一条边
                 relationshipHandleNo = self.convertToNumber(relationshipHashCode)
 
                 try:
@@ -200,8 +202,17 @@ class dblpArticleHandler(xml.sax.ContentHandler):
         return hash % self.hashCount
 
     def getHashCode(self, s):
-        hash = int.from_bytes(s.encode(), 'little')
-        return hash
+        m = hashlib.md5()
+        m.update(s.encode())
+        ans = str(int(m.hexdigest(), 16))[0:10]
+        # print(int(ans))
+        # hash = int.from_bytes(s.encode(), 'little')
+        # ans = str(hash)[0:10]
+        return int(ans)
+
+
+
+
 
     def convertFromNumber(self, n):
         return n.to_bytes(math.ceil(n.bit_length() / 8), 'little').decode()
@@ -209,7 +220,7 @@ class dblpArticleHandler(xml.sax.ContentHandler):
 
 
 if (__name__ == "__main__"):
-
+    starttime = datetime.datetime.now()
     #todo: 创建 article.csv
     articleCsvPath = "./data/csv/article.csv"
     articleCsvFile = open(articleCsvPath, "a+", newline='')
@@ -232,5 +243,8 @@ if (__name__ == "__main__"):
     Handler.hashFileClose()
     #todo: 关闭文件
     articleCsvFile.close()
+
+    endtime = datetime.datetime.now()
+    print(endtime - starttime)
 
 
