@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE dblp SYSTEM "/Users/lengo/code/pythonProject/data/dblp/temp/dblp.dtd">
+<!DOCTYPE dblp SYSTEM "X:\code\pythonProject\dblp\data\dblp.dtd">
 <dblp>
 <article mdate="00-06-5" key="tr/meltdown/s18" publtype="informal">
 <author>Author-0</author>
 <author>Author-1</author>
-<author>Author-</author>
+<author>Author-2</author>
+    <author bibtex="Hans Kleine{ }B{\ning</author>
 <title>Article-0</title>
 <journal>meltdownattack.com</journal>
 <year>018</year>
@@ -13,22 +14,22 @@
 
 <article mdate="00-06-5" key="tr/meltdown/s18" publtype="informal">
 <author>Author-1</author>
-<author>Author-</author>
+<author>Author-2</author>
 <author>Author-3</author>
 <title>Article-1</title>
 <journal>meltdownattack.com</journal>
 <year>018</year>
-<ee type="oa">https://spectreattack.com/spectre.pdf</ee>
+    <ee type="oa">https://spec22tc&ouml;om/spe&auml;ctre&Uuml;.pdf</ee>
 </article>
 
     <article mdate="00-06-5" key="tr/meltdown/s18" publtype="informal">
+<author>Author-2</author>
 <author>Author-3</author>
-<author>Author-4</author>
-<title>Article-</title>
-        <title>Symmetric Isostatic Frameworks with  <sup> Distance Constraints.</title>
+<title>Article-2</title>
+        <title>Symmetric Isostatic Frameworks with  Distance Constraints.</title>
 <journal>meltdownattack.com</journal>
 <year>018</year>
-<ee type="oa">https://spectreattack.com/spectre.pdf</ee>
+<ee type="oa">https://spec22tm/spe&auml;ctre&Uuml;.pdf</ee>
 </article>
 
 
@@ -130,8 +131,9 @@
 
     <www mdate="019-07-10" key="www/org/w3/style-xsl">
 <title>W3C: Extensible Stylesheet Language (XSL)</title>
-<ee>http://www.w3.org/Style/XSL/</ee>
+<ee type="oa">https://spec22trpdf</ee>
 <year>001</year>
 </www>
+</dblp>
 
 
