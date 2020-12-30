@@ -31,9 +31,9 @@ class dblpArticleHandler(xml.sax.ContentHandler):
         self.author_id = 0
         # article_list
         self.article_list = []
-        # author => author_id
+        # node => author_id
         self.author_dict = dict()
-        # author => ((title_id, title), (...))
+        # node => ((title_id, title), (...))
         self.author_article_dict = dict()
         # relationship relation_flag => (start, weight, end)
         self.relationship_dict = dict()
@@ -41,7 +41,7 @@ class dblpArticleHandler(xml.sax.ContentHandler):
         self.hashCount = 100
         self.authorCount = 0
         self.relationCount = 0
-        self.baseAuthorPath = "./data/hash/author"
+        self.baseAuthorPath = "./data/hash/node"
         self.baseRelationshipPath = "./data/hash/relationship"
         self.authorHandleList = []
         self.authorWriteList = []
@@ -67,7 +67,7 @@ class dblpArticleHandler(xml.sax.ContentHandler):
         # 读取字符时调用
 
     def characters(self, content):
-        if self.CurrentTag == "author":
+        if self.CurrentTag == "node":
             self.author.append(content)
         elif self.CurrentTag == "title":
             self.title = content
@@ -98,11 +98,11 @@ class dblpArticleHandler(xml.sax.ContentHandler):
                         self.rating)
             articleWriter.writerow(atl)
 
-            #todo author
+            #todo node
             auId = []
             inx = 0
             for p in self.author:
-                # 节点 author 信息 id name article_list
+                # 节点 node 信息 id name article_list
                 curArticle = (str(self.article_id),
                               self.title if self.title != "" else "",
                               self.journal if self.journal != "" else "",
@@ -173,7 +173,7 @@ class dblpArticleHandler(xml.sax.ContentHandler):
     def hashFile(self):
 
         for x in range(self.hashCount):
-            # author 文件句柄
+            # node 文件句柄
             author = self.baseAuthorPath+"/author_"+str(x)+".csv"
             authorCsvFile = open(author, "a+", newline='')
             authorWriter = csv.writer(authorCsvFile)
@@ -226,7 +226,7 @@ if (__name__ == "__main__"):
     articleCsvFile = open(articleCsvPath, "a+", newline='')
     articleWriter = csv.writer(articleCsvFile)
     articleScheme = (
-    "article_id", "author", "title", "journal", "year", "ee", "mdate", "key", "publtype", "reviewid", "rating")
+    "article_id", "node", "title", "journal", "year", "ee", "mdate", "key", "publtype", "reviewid", "rating")
     articleWriter.writerow(articleScheme)
 
     #todo: 解析xml

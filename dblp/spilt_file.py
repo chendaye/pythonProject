@@ -1,13 +1,11 @@
-# -*- coding:utf-8 -*-
-# node:chenpeng
-# date: 2017-11-07
-# 作用：根据需要拆分的文件数，拆分文件
-# 备注：可以拆分csv格式文件和txt格式文件，返回的数据均是没有表头
 import os
 import pandas as pd
 
+def msg(path):
+    df = pd.read_csv(path)
+    print(f"总行数：{len(df)}")
 
-def file_split(filename, file_num):
+def split(filename, file_num, save_path):
     # 获得每个文件需要有的行数
     chunksize = 1000000  # 先初始化的chunksize是100W
     data1 = pd.read_table(filename, chunksize=chunksize, sep=',', encoding='gbk')
@@ -21,12 +19,18 @@ def file_split(filename, file_num):
     data2 = pd.read_table(filename, chunksize=chunksize, sep=',', encoding='gbk')
     i = 0  # 定文件名
     for chunk in data2:
-        chunk.to_csv((f'F:\\neo4jcsv\\shared_members_mini_{i}.csv').format(head, i, tail), header=None, index=False)
-        print(f'保存第{i}个数据'.format(i))
+        cur_path = f'{save_path}_{i}.csv'
+        print(f"正在处理文件：{cur_path}")
+        chunk.to_csv(cur_path.format(head, i, tail), header=None, index=False)
         i += 1
 
 
 
+
 if __name__ == '__main__':
-    filename = "F:\\neo4jcsv\\shared_members.csv"
-    file_split(filename, 5)
+    # 查分边
+    relation_path = "./data/csv/relationships.csv" # 831,9365
+    split(relation_path, 8, "./data/csv/relationship/relationship")
+    # 拆分节点
+    node_path = "./data/csv/author_articles.csv" # 271,8656
+    split(node_path, 2, "data/csv/node/node")

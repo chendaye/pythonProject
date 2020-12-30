@@ -5,7 +5,7 @@ from itertools import combinations
 
 
 articleCsvPath = "../data/dblp/article.csv"
-authorCsvPath = "../data/dblp/author.csv"
+authorCsvPath = "../data/dblp/node.csv"
 relationshipCsvPath = "../data/dblp/relationship.csv"
 
 class dblpArticleHandler(xml.sax.ContentHandler):
@@ -32,9 +32,9 @@ class dblpArticleHandler(xml.sax.ContentHandler):
         self.author_id = 0
         # article_list
         self.article_list = []
-        # author => author_id
+        # node => author_id
         self.author_dict = dict()
-        # author => ((title_id, title), (...))
+        # node => ((title_id, title), (...))
         self.author_article_dict = dict()
         # relationship relation_flag => (start, weight, end)
         self.relationship_dict = dict()
@@ -58,7 +58,7 @@ class dblpArticleHandler(xml.sax.ContentHandler):
         # 读取字符时调用
 
     def characters(self, content):
-        if self.CurrentTag == "author":
+        if self.CurrentTag == "node":
             self.author.append(content)
         elif self.CurrentTag == "title":
             self.title = content
@@ -89,10 +89,10 @@ class dblpArticleHandler(xml.sax.ContentHandler):
                         self.rating))
             # print(tag+"=="+str(self.article_id) +"===" +self.title)
 
-            # author
+            # node
             auId = []
             for p in self.author:
-                # 节点 author 信息 id name article_list
+                # 节点 node 信息 id name article_list
                 curArticle = (str(self.article_id), self.title, self.journal, self.year)
                 if p in self.author_dict:
                     curp = self.author_dict.get(p)
@@ -161,7 +161,7 @@ if (__name__ == "__main__"):
 
     # 创建 article.csv
     articleScheme = (
-    "article_id", "author", "title", "journal", "year", "ee", "mdate", "key", "publtype", "reviewid", "rating")
+    "article_id", "node", "title", "journal", "year", "ee", "mdate", "key", "publtype", "reviewid", "rating")
     Handler.writeCsvScheme(articleScheme, articleCsvPath)
     with open(articleCsvPath, "a+", newline='') as file:  # 处理csv读写时不同换行符  linux:\n    windows:\r\n    mac:\r
         csv_file = csv.writer(file)

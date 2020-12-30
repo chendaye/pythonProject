@@ -3,6 +3,7 @@ venv/
 *.iml
 dblp/data/csv/
 dblp/data/dblp.dtd
+dblp/data/*.zip
 dblp/data/dblp.xml
 dblp/data/dblp.xml.gz
 dblp/data/hash/
