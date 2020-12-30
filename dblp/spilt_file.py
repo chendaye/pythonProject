@@ -21,7 +21,8 @@ def split(filename, file_num, save_path):
     for chunk in data2:
         cur_path = f'{save_path}_{i}.csv'
         print(f"正在处理文件：{cur_path}")
-        chunk.to_csv(cur_path.format(head, i, tail), header=None, index=False)
+        # chunk.to_csv(cur_path.format(head, i, tail), header=None, index=False)
+        chunk.to_csv(cur_path.format(head, i, tail),  index=False)
         i += 1
 
 
@@ -30,7 +31,7 @@ def split(filename, file_num, save_path):
 if __name__ == '__main__':
     # 查分边
     relation_path = "./data/csv/relationships.csv" # 831,9365
-    split(relation_path, 8, "./data/csv/relationship/relationship")
+    # split(relation_path, 8, "./data/csv/relationship/relationship")
     # 拆分节点
     node_path = "./data/csv/author_articles.csv" # 271,8656
-    split(node_path, 2, "data/csv/node/node")
+    split(node_path, 4, "data/csv/node/node")
