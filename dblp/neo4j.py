@@ -40,12 +40,12 @@ if __name__ == '__main__':
     author_path = "./data/csv/author_articles.csv"
     author_csv_file = open(author_path, "a+", newline='')
     article_writer = csv.writer(author_csv_file)
-    article_scheme = ("article_id", "node", "articles")
+    article_scheme = ("author_id", "node", "articles")
     article_writer.writerow(article_scheme)
     for i in range(100):
         path = f"./data/hash/author/author_{i}.csv"
         print(f"当前正在处理文件：{path}")
-        # authorNode(article_writer, path)
+        authorNode(article_writer, path)
     author_csv_file.close()
 
     # 边
