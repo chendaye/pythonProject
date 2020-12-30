@@ -30,10 +30,11 @@ def articleRelationship(write, path):
         start = df["start"][i]
         weight = df["weight"][i]
         end = df["end"][i]
-        if hash in article_dict.keys():
-            article_dict[hash][1] += 1
-        else:
-            article_dict.update({hash: [start, weight, end]})
+        if start != end: # 不能自己指向自己
+            if hash in article_dict.keys():
+                article_dict[hash][1] += 1
+            else:
+                article_dict.update({hash: [start, weight, end]})
     for ar in article_dict.values():
         write.writerow((ar[0], ar[1], ar[2]))
 
