@@ -1,5 +1,10 @@
 import pandas as pd
 import csv
+import re
+
+# 替换引号
+def replace(s):
+    return re.sub("['\"]", "", s)
 
 # 获取全部作者及其文章（节点和属性）
 def authorNode(write, path):
@@ -8,7 +13,7 @@ def authorNode(write, path):
     for i in range(len(df)):
         hash = df["author_hash"][i]
         name = df["name"][i]
-        article = df["article"][i]
+        article = replace(df["article"][i]) # 去掉文章中的引号
         if hash in author_dict.keys():
             author_dict[hash][2].add(article)
         else:
@@ -49,13 +54,15 @@ if __name__ == '__main__':
     author_csv_file.close()
 
     # 边
-    relation_path = "./data/csv/relationships.csv"
-    relation_csv_file = open(relation_path, "a+", newline='')
-    relation_writer = csv.writer(relation_csv_file)
-    relation_scheme = ("start", "weight", "end")
-    relation_writer.writerow(relation_scheme)
-    for i in range(100):
-        path = f"./data/hash/relationship/relationship_{i}.csv"
-        print(f"当前正在处理文件：{path}")
-        articleRelationship(relation_writer, path)
-    relation_csv_file.close()
+    # relation_path = "./data/csv/relationships.csv"
+    # relation_csv_file = open(relation_path, "a+", newline='')
+    # relation_writer = csv.writer(relation_csv_file)
+    # relation_scheme = ("start", "weight", "end")
+    # relation_writer.writerow(relation_scheme)
+    # for i in range(100):
+    #     path = f"./data/hash/relationship/relationship_{i}.csv"
+    #     print(f"当前正在处理文件：{path}")
+    #     articleRelationship(relation_writer, path)
+    # relation_csv_file.close()
+
+

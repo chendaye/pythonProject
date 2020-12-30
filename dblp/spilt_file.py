@@ -34,4 +34,4 @@ if __name__ == '__main__':
     # split(relation_path, 8, "./data/csv/relationship/relationship")
     # 拆分节点
     node_path = "./data/csv/author_articles.csv" # 271,8656
-    split(node_path, 4, "data/csv/node/node")
+    split(node_path, 4, "./data/csv/node/node")
