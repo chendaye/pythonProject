@@ -55,15 +55,15 @@ if __name__ == '__main__':
     author_csv_file.close()
 
     # 边
-    # relation_path = "./data/csv/relationships.csv"
-    # relation_csv_file = open(relation_path, "a+", newline='')
-    # relation_writer = csv.writer(relation_csv_file)
-    # relation_scheme = ("start", "weight", "end")
-    # relation_writer.writerow(relation_scheme)
-    # for i in range(100):
-    #     path = f"./data/hash/relationship/relationship_{i}.csv"
-    #     print(f"当前正在处理文件：{path}")
-    #     articleRelationship(relation_writer, path)
-    # relation_csv_file.close()
+    relation_path = "./data/csv/relationships.csv"
+    relation_csv_file = open(relation_path, "a+", newline='')
+    relation_writer = csv.writer(relation_csv_file)
+    relation_scheme = ("start", "weight", "end")
+    relation_writer.writerow(relation_scheme)
+    for i in range(100):
+        path = f"./data/hash/relationship/relationship_{i}.csv"
+        print(f"当前正在处理文件：{path}")
+        articleRelationship(relation_writer, path)
+    relation_csv_file.close()
 
 

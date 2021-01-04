@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE dblp SYSTEM "X:\code\pythonProject\dblp\data\dblp.dtd">
 <dblp>
-<article mdate="00-06-5" key="tr/meltdown/s18" publtype="informal">
-<author>Author-0</author>
-<author>Author-1</author>
-<author>Author-2</author>
-    <author bibtex="Hans Kleine{ }B{\ning</author>
-<title>Article-0</title>
-<journal>meltdownattack.com</journal>
-<year>018</year>
-<ee type="oa">https://spectreattack.com/spectre.pdf</ee>
+
+<article mdate="2019-10-25" key="tr/gte/TR-0310-11-95-165" publtype="informal">
+<author>Frank Manola</author>
+<title>Integrating Object-Oriented Applications and Middleware with Relational Databases.</title>
+<journal>GTE Laboratories Incorporated</journal>
+<volume>TR-0310-11-95-165</volume>
+<month>November</month>
+<year>1995</year>
+<url>db/journals/gtelab/index.html#TR-0310-11-95-165</url>
+</article><article mdate="2019-10-25" key="tr/gte/TR-0146-06-91-165" publtype="informal">
+<author>Alejandro P. Buchmann</author>
+<author>M. Tamer &Ouml;zsu</author>
+<author>Dimitrios Georgakopoulos</author>
+<title>Towards a Transaction Management System for DOM.</title>
+<journal>GTE Laboratories Incorporated</journal>
+<volume>TR-0146-06-91-165</volume>
+<month>June</month>
+<year>1991</year>
+<url>db/journals/gtelab/index.html#TR-0146-06-91-165</url>
 </article>
+
 
 <article mdate="00-06-5" key="tr/meltdown/s18" publtype="informal">
 <author>Author-1</author>
