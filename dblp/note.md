@@ -108,3 +108,15 @@ nx:n为数字，连续向后删除n个字符
 
 
 <author bibtex=
+
+
+# nltk 
+
+```bash
+# 速度慢可以换国内的源
+pip3 install nltk
+```
+
+> 下载 把packages 包下面的内容 拷贝到 ~/nltk_data. 注意要解压 *.zip文件
+
+[github 下载](https://github.com/nltk/nltk_data/tree/gh-pages/packages)

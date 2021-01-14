@@ -3,27 +3,29 @@ import csv
 import re
 import collections
 
+
+exclude = ["was", "An", "a", "an", "never", "for", "of", "on", "in",
+               "and", "A", "With", "the", "to", "It", "was", "by", "The", "On",
+               "On", "that", "with", "at", "At", "(was", "published)",
+               "Using","using", "Based", "based", "From", "from", "As", "as", "Does",
+               "does", "Use", "use", "Toward", "toward", "All", "all"] # 无效字符
+
 # 替换引号
 def replace(s):
     return re.sub("['\"]", "", s)
 
 # 获取全部作者 文章标题关键字排序
 def keywordOrder(input_path, ouput_path):
-    input = pd.read_csv(input_path)
+    input = pd.read_csv(input_path) # author_articles.csv
     output_csv_file = open(ouput_path, "a+", newline='')
-    output_writer = csv.writer(output_csv_file)
+    output_writer = csv.writer(output_csv_file) # keyword
     # keyword.csv scheme
     output_scheme = ("author_id", "author_name", "keywords")
     output_writer.writerow(output_scheme)
-    exclude = ["was", "An", "a", "an", "never", "for", "of", "on", "in",
-               "and", "A", "With", "the", "to", "It", "was", "by", "The", "On",
-               "On", "that", "with", "at", "At", "(was", "published)",
-               "Using","using", "Based", "based", "From", "from", "As", "as", "Does",
-               "does", "Use", "use", "Toward", "toward", "All", "all"] # 无效字符
     for i in range(len(input)):
         # 处理排序
-        author_id = input["author_id"][i];
-        author_name = input["node"][i];
+        author_id = input["author_id"][i]
+        author_name = input["node"][i]
         articles = input["articles"][i].split("@") # list
         word_dict = collections.OrderedDict() #有序字典
         # 一个作者多篇文章
@@ -53,10 +55,13 @@ def keywordOrder(input_path, ouput_path):
 
 
 
+
 if __name__ == '__main__':
+    # 统计每个作者所有文章里面的关键字个数
     input_path = "./data/csv/author_articles.csv"
     out_path = f"./data/csv/keyword.csv"
     keywordOrder(input_path, out_path)
+
 
 
 
