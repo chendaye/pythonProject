@@ -27,11 +27,13 @@ def split(filename, file_num, save_path):
 
 
 
-
+"""
+拆分整个图为，若干小文件
+"""
 if __name__ == '__main__':
     # 查分边
     relation_path = "./data/csv/relationships.csv" # 831,9365
     split(relation_path, 8, "./data/csv/relationship/relationship")
     # 拆分节点
     node_path = "./data/csv/author_articles.csv" # 271,8656
-    split(node_path, 4, "./data/csv/node/node")
+    split(node_path, 4, "data/csv/node/node")

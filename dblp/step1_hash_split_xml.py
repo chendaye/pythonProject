@@ -22,7 +22,7 @@ class dblpArticleHandler(xml.sax.ContentHandler):
         self.rating = ""
         self.cdate = ""
         # csv
-        self.articleCsvPath = "../data/dblp/article.csv"
+        self.articleCsvPath = "./data/dblp/article.csv"
         self.author_set = set()
 
         # article_id

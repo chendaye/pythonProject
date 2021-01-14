@@ -42,7 +42,7 @@ def articleRelationship(write, path):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    # 作者&文章
+    #todo: 作者&文章 写 author_articles.csv
     author_path = "./data/csv/author_articles.csv"
     author_csv_file = open(author_path, "a+", newline='')
     article_writer = csv.writer(author_csv_file)
@@ -54,7 +54,7 @@ if __name__ == '__main__':
         authorNode(article_writer, path)
     author_csv_file.close()
 
-    # 边
+    #todo: 边 写 relationships.csv
     relation_path = "./data/csv/relationships.csv"
     relation_csv_file = open(relation_path, "a+", newline='')
     relation_writer = csv.writer(relation_csv_file)
