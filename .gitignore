@@ -7,4 +7,6 @@ dblp/data/*.zip
 dblp/data/dblp.xml
 dblp/data/dblp.xml.gz
 dblp/data/hash/
+equitruss/data
+
 
