@@ -7,9 +7,9 @@ def msg(path):
 
 def split(filename, file_num, save_path):
     # 获得每个文件需要有的行数
-    chunksize = 1000000  # 先初始化的chunksize是100W
+    chunksize = 100000  # 先初始化的chunksize是100W
     data1 = pd.read_table(filename, chunksize=chunksize, sep=',', encoding='gbk')
-    num = 0
+    num = 0 # 文件总的行数
     for chunk in data1:
         num += len(chunk)
     chunksize = round(num / file_num + 1)
@@ -33,7 +33,7 @@ def split(filename, file_num, save_path):
 if __name__ == '__main__':
     # 查分边
     relation_path = "./data/csv/relationships.csv" # 831,9365
-    split(relation_path, 8, "./data/csv/relationship/relationship")
+    # split(relation_path, 8, "./data/csv/relationship/relationship")
     # 拆分节点
     node_path = "./data/csv/author_articles.csv" # 271,8656
-    split(node_path, 4, "data/csv/node/node")
+    split(node_path, 8, "data/csv/node/node")
