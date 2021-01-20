@@ -33,7 +33,7 @@ def writeRelationship(in_path,out_path):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    in_path = "./data/Graph/dblp20%_vertices.txt"
+    in_path = "./data/Graph/dblp100%_vertices.txt"
     out_path = "./data/relationship100.csv"
     writeRelationship(in_path, out_path)
 

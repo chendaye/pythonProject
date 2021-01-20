@@ -80,8 +80,8 @@ def authorNode(write, path):
 stopWords = stopWordsNltk()
 #print(tokenizeNltk("Wissensbasierte` Wissensbasierte Wissensbasierte` Systeme: ] , { > in der Medizin: GMDS/GI, Abstracts\" des 1. gemeinsamen RENDEZVOUS Version 1: An Experimental English Language Query Formulation System for Casual Users of Relational Data Bases.#Research Report / RJ / IBM / San Jose, California 1990"))
 
-# todo: 作者&文章 写 author_articles.csv
-author_path = "./author_articles.csv"
+# todo: 作者&文章 写 author_articles_tmp.csv
+author_path = "./author_articles_tmp.csv"
 author_csv_file = open(author_path, "a+", newline='')
 article_writer = csv.writer(author_csv_file)
 article_scheme = ("author_id", "node", "articles", "words")

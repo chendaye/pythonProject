@@ -16,7 +16,7 @@ def replace(s):
 
 # 获取全部作者 文章标题关键字排序
 def keywordOrder(input_path, ouput_path):
-    input = pd.read_csv(input_path) # author_articles.csv
+    input = pd.read_csv(input_path) # author_articles_tmp.csv
     output_csv_file = open(ouput_path, "a+", newline='')
     output_writer = csv.writer(output_csv_file) # keyword
     # keyword.csv scheme
@@ -58,7 +58,7 @@ def keywordOrder(input_path, ouput_path):
 
 if __name__ == '__main__':
     # 统计每个作者所有文章里面的关键字个数
-    input_path = "./data/csv/author_articles.csv"
+    input_path = "data/csv/author_articles_tmp.csv"
     out_path = f"./data/csv/keyword.csv"
     keywordOrder(input_path, out_path)
 
