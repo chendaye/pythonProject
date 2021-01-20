@@ -99,7 +99,7 @@ def articleRelationship(write, path):
         write.writerow((ar[0], ar[1], ar[2]))
 
 
-# 重新整理 author_articles.csv
+# 重新整理 author_articles_tmp.csv
 def removeQuote():
     author_path = "data/csv/author_articles.csv"
     author_csv_file = open(author_path, "a+", newline='')
@@ -118,7 +118,7 @@ def removeQuote():
             article_writer.writerow((author_id, node, article, words))
     author_csv_file.close();
 
-# 重新整理 author_articles.csv
+# 重新整理 author_articles_tmp.csv
 def removeQuoteOnlyWord():
     author_path = "data/csv/author_articles.csv"
     author_csv_file = open(author_path, "a+", newline='')
