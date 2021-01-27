@@ -13,6 +13,33 @@ dictionary = [] # 保存 dblp 中所有的 单词
 def replace(s):
     return re.sub("['\"\\\]", "", s)
 
+# 判断变量类型的函数
+def typeof(variate):
+    type = None
+    if isinstance(variate, int):
+        type = "int"
+    elif isinstance(variate, str):
+        type = "str"
+    elif isinstance(variate, float):
+        type = "float"
+    elif isinstance(variate, list):
+        type = "list"
+    elif isinstance(variate, tuple):
+        type = "tuple"
+    elif isinstance(variate, dict):
+        type = "dict"
+    elif isinstance(variate, set):
+        type = "set"
+    return type
+
+ # 返回变量类型
+def getType(variate):
+    arr = {"int": "整数", "float": "浮点", "str": "字符串", "list": "列表", "tuple": "元组", "dict": "字典", "set": "集合"}
+    vartype = typeof(variate)
+    if not (vartype in arr):
+        return "未知类型"
+    return arr[vartype]
+
 def stopWordsNltk():
     exclude = ["was",  "a", "an", "never", "for", "of", "on", "in",
                "and",   "the", "to", "it", "was", "by", "the",
@@ -137,6 +164,32 @@ def removeQuoteOnlyWord():
     author_csv_file.close();
 
 
+# 重新整理 author_articles.csv 增加 attribute 列
+def addttribute():
+    author_path = "data/csv/author_articles.csv"
+    author_csv_file = open(author_path, "a+", newline='')
+    article_writer = csv.writer(author_csv_file)
+    article_scheme = ("author_id", "node", "articles", "words", "attribute")
+    article_writer.writerow(article_scheme)
+    for i in range(8):
+        path = f"./data/csv/node/node_{i}.csv"
+        print(f"当前正在处理文件：{path}")
+        df = pd.read_csv(path)
+        for i in range(len(df)):
+            author_id = df["author_id"][i]
+            node = df["node"][i]
+            article = replace(df["articles"][i]) # 去掉文章中的引号
+            words = df["words"][i]
+            k_list = []
+            if isinstance(words, str) is not True:
+                words = "-1"
+            keywords = words.split("@")
+            for k in keywords:
+                k_list.append(k.split(":")[0])
+            attribute = ",".join(k_list)
+            article_writer.writerow((author_id, node, article, words, attribute))
+    author_csv_file.close();
+
 
 
 
@@ -145,7 +198,9 @@ if __name__ == '__main__':
     # str = '2533242816,Alex Gittens,"1437942#Tensor machines for learning target-specific polynomial features.#CoRR#2015@1582153#MALOnt: An Ontology for Malware Threat Intelligence.#CoRR#2020@158233#Sketched Ridge Regression: Optimization Perspective, Statistical Perspective, and Model Averaging.#J. Mach. Learn. Res.#2017@1361984#Alchemist: An Apache Spark MPI Interface.#CoRR#2018@1616276#Approximate Spectral Clustering via Randomized Sketching.#CoRR#2013@1558790#Improved matrix algorithms via the Subsampled Randomized Hadamard Transform#CoRR#2012@1578129#Accelerating Large-Scale Data Analysis by Offloading to High-Performance Computing Libraries using Alchemist.#CoRR#2018@1555216#Compact Random Feature Maps.#CoRR#2013@1350630#Fast Fixed Dimension L2-Subspace Embeddings of Arbitrary Accuracy, With Application to L1 and L2 Tasks.#CoRR#2019@2235439#Group Collaborative Representation for Image Set Classification.#Int. J. Comput. Vis.#2019@1639625#Revisiting the Nystrom Method for Improved Large-Scale Machine Learning#CoRR#2013@2440486#(was never published)##1993@1261062#Improved Matrix Algorithms via the Subsampled Randomized Hadamard Transform.#SIAM J. Matrix Anal. Appl.#2013@1577710#The spectral norm error of the naive Nystrom extension#CoRR#2011@158893#Scalable Kernel K-Means Clustering with Nystr\""om Approximation: Relative-Error Bounds.#J. Mach. Learn. Res.#2019@2440504#An interactive visualization framework for performance analysis.#EAI Endorsed Trans. Ubiquitous Environ.#2015@1514989#Sketched Ridge Regression: Optimization Perspective, Statistical Perspective, and Model Averaging.#CoRR#2017@1346322#Scalable Kernel K-Means Clustering with Nystrom Approximation: Relative-Error Bounds.#CoRR#2017@1475621#Matrix Factorization at Scale: a Comparison of Scientific Data Analytics in Spark and C+MPI Using Three Case Studies.#CoRR#2016@158608#Revisiting the Nystrom Method for Improved Large-scale Machine Learning.#J. Mach. Learn. Res.#2016@262604#Alchemist: An Apache Spark  MPI interface.#Concurr. Comput. Pract. Exp.#2019",4781:tensor:1@57:machines:1@367:learning:3@66639:targetspecific:1@685:polynomial:1@617:features:1@203950:malont:1@1173:ontology:1@3820:malware:1@3758:threat:1@677:intelligence:1@49034:sketched:2@4735:ridge:2@371:regression:2@668:optimization:2@1171:perspective:4@857:statistical:2@448:model:2@1302:averaging:2@187721:alchemist:3@4731:apache:2@4732:spark:3@1032:interface:2@4580:approximate:1@1428:spectral:2@159:clustering:3@820:randomized:3@3088:sketching:1@889:improved:4@660:matrix:3@821:algorithms:2@24032:subsampled:2@11529:hadamard:2@2238:transform:2@2890:accelerating:1@237:largescale:3@18:data:2@5:analysis:2@6593:offloading:1@95:highperformance:1@96:computing:1@3424:libraries:1@4306:compact:1@616:random:1@578:feature:1@4345:maps:1@467:fast:1@2291:fixed:1@2181:dimension:1@601:subspace:1@2698:embeddings:1@2701:arbitrary:1@923:accuracy:1@327:application:1@2491:tasks:1@445:group:1@2439:collaborative:1@622:representation:1@597:image:1@558:classification:1@2646:revisiting:2@55541:nystrom:5@664:method:2@366:machine:2@6:published:1@4068:norm:1@291:error:1@2112:naive:1@528:extension:1@481:scalable:2@550:kernel:2@702:kmeans:2@761:approximation:2@4744:relativeerror:2@1231:bounds:2@1:interactive:1@2:visualization:1@3:framework:1@4:performance:1@4830:factorization:1@271:scale:1@593:comparison:1@70:scientific:1@2389:analytics:1@187724:cmpi:1@796:three:1@1229:case:1@2663:studies:1'
     # print(replace(str))
     # removeQuoteOnlyWord()
-    removeQuote()
+    # removeQuote()
+    addttribute()
+
     # # 要过滤的词
     # stopWords = stopWordsNltk()
     # # print(tokenizeNltk("Wissensbasierte` Wissensbasierte Wissensbasierte` Systeme: ] , { > in der Medizin: GMDS/GI, Abstracts\" des 1. gemeinsamen RENDEZVOUS Version 1: An Experimental English Language Query Formulation System for Casual Users of Relational Data Bases.#Research Report / RJ / IBM / San Jose, California 1990"))
