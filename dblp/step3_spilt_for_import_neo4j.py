@@ -38,8 +38,13 @@ if __name__ == '__main__':
     # 查分边
     relation_path = "./data/csv/relationships.csv" # 831,9365
     # split(relation_path, 10, "./data/csv/relationship/relationship")
-    # 拆分节点
-    node_path = "data/csv/author_articles.csv"  # 271,8656
-    split(node_path, 8, "data/csv/node_new/node")
+
+    # 拆分 paper_author
+    node_path = "data/csv/paper_author.csv"  # 1400,1744
+    # split(node_path, 20, "data/csv/paper/relationship")
+
+    # 拆分 paper
+    node_path = "data/csv/paper.csv"  # 244,0506
+    split(node_path, 15, "data/csv/paper/node")
 
 
